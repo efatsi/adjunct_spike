@@ -1,9 +1,21 @@
-<p id="notice"><%= notice %></p>
+<%= link_to 'Index', users_path %>
 
 <p>
   <strong>Name:</strong>
   <%= @user.name %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p>
+  Availabilities:
+
+  <%= render "availability", user: @user %>
+</p>
+
+<%= simple_form_for @user.availabilities.new do |f| %>
+  <%= f.input :day, collection: Availability::DAYS.invert.to_a %>
+  <%= f.input :input_start, label: "Start time" %>
+  <%= f.input :input_end, label: "End time" %>
+  <%= f.input :time_zone, collection: all_time_zones %>
+  <%= f.input :user_id, value: @user.id, as: :hidden %>
+  <%= f.submit %>
+<% end %>

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124192609) do
+ActiveRecord::Schema.define(version: 20141124192831) do
+
+  create_table "availabilities", force: true do |t|
+    t.integer  "day"
+    t.time     "utc_start"
+    t.time     "utc_end"
+    t.string   "input_start"
+    t.string   "input_end"
+    t.string   "time_zone"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"

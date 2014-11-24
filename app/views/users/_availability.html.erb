@@ -1,0 +1,7 @@
+<ul>
+  <% user.availabilities.each do |avail| %>
+    <li>
+      <%= day_name(avail.day) %>: <%= avail.input_start %> - <%= avail.input_end %> (<%= avail.time_zone %>)
+    </li>
+  <% end %>
+</ul>
