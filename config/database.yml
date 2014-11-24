@@ -1,0 +1,17 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: adjunct_spike_development
+  pool: 5
+  username: root
+  password: eli
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: adjunct_spike_test
+  pool: 5
+  username: root
+  password: eli
