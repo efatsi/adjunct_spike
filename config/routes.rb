@@ -2,8 +2,7 @@ Rails.application.routes.draw do
   resources :users
   resources :availabilities, only: :create
 
-  get  "/search", to: "search#new"
-  post "/search", to: "search#create"
+  resources :searches, only: [:new, :create, :update, :show]
 
   root "users#index"
 end

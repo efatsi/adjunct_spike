@@ -1,0 +1,58 @@
+<h1>Search</h1>
+
+<h4><%= link_to "Home", root_path %></h4>
+
+<%= simple_nested_form_for @search do |f| %>
+  <%= f.input :time_zone,
+    collection: all_time_zones,
+    include_blank: true,
+    required: false %>
+
+  <%= f.fields_for :sub_searches do |g| %>
+    <%= g.input :day,
+      collection: Availability::DAYS.invert.to_a,
+      include_blank: true,
+      required: false %>
+    <%= g.input :input_start, label: "Start time", required: false %>
+    <%= g.input :input_end,   label: "End time",   required: false %>
+    <hr>
+  <% end %>
+
+  <p><%= f.link_to_add "Add a sub search", :sub_searches %></p>
+
+  <%= f.submit "Search" %>
+<% end %>
+
+<% if @search.results.present? %>
+  <h2>Query</h2>
+  <div>Time zone: <%= @search.time_zone %></div>
+
+  <% @search.sub_searches.each do |ss| %>
+    --------------------
+    <div>Day: <%= day_name(ss.day) %></div>
+    <div>Start Time: <%= ss.input_start %></div>
+    <div>End Time: <%= ss.input_end %></div>
+  <% end %>
+
+  <h2>Results</h2>
+
+  <ul>
+    <% @search.results.each do |avail| %>
+      <li>
+        <%= avail.user %> - <%= day_name(avail.day) %>: <%= avail.input_start %> - <%= avail.input_end %> (<%= avail.time_zone %>)
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<hr>
+
+<h2>All Possible Results</h2>
+
+<ul>
+  <% Availability.all.each do |avail| %>
+    <li>
+      <%= avail.user %> - <%= day_name(avail.day) %>: <%= avail.input_start %> - <%= avail.input_end %> (<%= avail.time_zone %>)
+    </li>
+  <% end %>
+</ul>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124192831) do
+ActiveRecord::Schema.define(version: 20141124223014) do
 
   create_table "availabilities", force: true do |t|
     t.integer  "day"
@@ -21,6 +21,21 @@ ActiveRecord::Schema.define(version: 20141124192831) do
     t.string   "input_end"
     t.string   "time_zone"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "searches", force: true do |t|
+    t.string   "time_zone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sub_searches", force: true do |t|
+    t.integer  "day"
+    t.string   "input_start"
+    t.string   "input_end"
+    t.integer  "search_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
