@@ -13,6 +13,10 @@ class TimeParser
   private
 
   def date_for(day)
+    # return a date in the year 2000
+    # 2000 is an arbitrary year, but all times need to
+    # be stored and compared with on equal terms
+
     {
       "1" => "2000-1-2", # sunday
       "2" => "2000-1-3", # monday

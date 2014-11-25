@@ -18,21 +18,17 @@ class Availability < ActiveRecord::Base
   end
 
   def calculate_utc_times
-    self.utc_start = parsed_utc_start
-    self.utc_end   = parsed_utc_end
+    self.utc_start = parse(input_start)
+    self.utc_end   = parse(input_end)
   end
 
   private
 
-  def parsed_utc_start
-    time_parser.utc(day, input_start)
-  end
-
-  def parsed_utc_end
-    time_parser.utc(day, input_end)
+  def parse(time)
+    time_parser.utc(day, time)
   end
 
   def time_parser
-    @time_parser = TimeParser.new(time_zone)
+    @time_parser ||= TimeParser.new(time_zone)
   end
 end
