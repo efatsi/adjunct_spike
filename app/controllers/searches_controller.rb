@@ -5,7 +5,8 @@ class SearchesController < ApplicationController
   end
 
   def create
-    @search  = Search.create(search_params)
+    @search = Search.new(search_params)
+    @search.save
 
     render :new
   end

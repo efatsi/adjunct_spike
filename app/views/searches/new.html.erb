@@ -27,7 +27,7 @@
 </div>
 
 
-<% if @search.results.present? %>
+<% if @search.persisted? %>
   <div class="query-results">
     <h2>Query</h2>
     <div>Time zone: <%= @search.time_zone %></div>

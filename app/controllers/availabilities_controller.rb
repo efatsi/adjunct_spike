@@ -1,6 +1,6 @@
 class AvailabilitiesController < ApplicationController
   def create
-    @availability = AvailabilityBuilder.build(availability_params)
+    @availability = Availability.new_and_calculate(availability_params)
 
     if @availability.save
       redirect_to @availability.user, notice: "Availability has been created"

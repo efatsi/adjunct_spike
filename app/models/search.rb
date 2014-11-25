@@ -1,4 +1,6 @@
 class Search < ActiveRecord::Base
+  validates :time_zone, :presence => true
+
   has_many :sub_searches, :dependent => :destroy
   accepts_nested_attributes_for :sub_searches, :allow_destroy => true
 
@@ -6,7 +8,7 @@ class Search < ActiveRecord::Base
     return [] if sub_searches.none?
 
     user_id_arrays = sub_searches.map do |sub_search|
-      sub_search.find_user_ids(time_zone_object)
+      sub_search.find_user_ids(time_parser)
     end
 
     user_ids = user_id_arrays.first.select do |user_id|
@@ -16,7 +18,7 @@ class Search < ActiveRecord::Base
     User.find(user_ids)
   end
 
-  def time_zone_object
-    @time_zone ||= ActiveSupport::TimeZone.new(time_zone)
+  def time_parser
+    TimeParser.new(time_zone)
   end
 end
