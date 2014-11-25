@@ -8,7 +8,7 @@
 <p>
   Availabilities:
 
-  <%= render "availability", user: @user %>
+  <%= render "shared/availability", user: @user %>
 </p>
 
 <%= simple_form_for @user.availabilities.new do |f| %>

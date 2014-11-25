@@ -1,44 +1,22 @@
 class Search < ActiveRecord::Base
-  has_many :sub_searches
-
-  accepts_nested_attributes_for :sub_searches
+  has_many :sub_searches, :dependent => :destroy
+  accepts_nested_attributes_for :sub_searches, :allow_destroy => true
 
   def results
-    if sub_searches.any?
-      Availability.where("day = ? AND utc_start <= ? && utc_end >= ?", day, utc_start, utc_end)
+    return [] if sub_searches.none?
+
+    user_id_arrays = sub_searches.map do |sub_search|
+      sub_search.find_user_ids(time_zone_object)
     end
-  end
 
-  def day
-    sub_search.day
-  end
+    user_ids = user_id_arrays.first.select do |user_id|
+      user_id_arrays.all?{ |array| array.include?(user_id) }
+    end
 
-  def utc_start
-    time_zone_object.parse(sub_search.input_start)
-  end
-
-  def utc_end
-    time_zone_object.parse(sub_search.input_end)
+    User.find(user_ids)
   end
 
   def time_zone_object
     @time_zone ||= ActiveSupport::TimeZone.new(time_zone)
   end
-
-  def sub_search
-    @sub_search ||= sub_searches.first
-  end
 end
-
-# User.find_by_sql %Q{
-#   SELECT user.* FROM users user, availabilities avail, availabilities avail2
-#   WHERE (
-#       avail.user_id = user.id  AND
-#       avail.day     = 2
-#     ) AND
-#     (
-#       avail2.user_id = user.id AND
-#       avail2.day     = 5
-#     )
-#   GROUP BY user.id
-# }

@@ -13,3 +13,15 @@
  *= require_tree .
  *= require_self
  */
+
+.search {
+  background: antiquewhite;
+}
+
+.query-results {
+  background: gainsboro;
+}
+
+.all-results {
+  background: lightblue;
+}
